@@ -17,7 +17,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
-  devtool: "source-map",
+  devtool : 'inline-source-map',
   module: {
     rules: [
       { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] },

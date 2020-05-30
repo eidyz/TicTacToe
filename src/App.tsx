@@ -15,16 +15,23 @@ export default () => {
         todo))
   }
 
+  const deleteTodo = (i: number) => {
+    setTodos(todos.filter((todo, index) => index !== i))
+  }
+
   return (
     <div className="app">
       <Todos onSubmit={(text: string) => setTodos([...todos, { text, done: false }])} />
 
       {todos.map((todo, i) => {
-        return <div
-          key={i}
-          onClick={() => toggleTodo(i)}
-          className={`todo-item ${todo.done ? "line-through" : ""}`}>
-          {todo.text}
+        return <div className="d-flex justify-content-center align-items-center">
+          <div
+            key={i}
+            className={`todo-item ${todo.done ? "line-through" : ""}`}
+            onClick={() => toggleTodo(i)}>
+            {todo.text}
+          </div>
+          <div className="todo-item__delete" onClick={() => deleteTodo(i)}>X</div>
         </div>
       })}
     </div>
