@@ -63,8 +63,6 @@ export default () => {
     const gameWonByO = _.some(_.map(winningConditions, conditions => arrayContainsArray(oIndexes, conditions)))
     const gameDraw = _.every(board, item => !_.isNil(item)) && (gameWonByX === false && gameWonByO === false)
 
-    console.log(gameState, xIndexes, oIndexes, gameWonByX, gameWonByO);
-
     setGameState(
       gameWonByX ? "X's won" : gameWonByO ? "O's won" : gameDraw ? "Draw" : null
     )
