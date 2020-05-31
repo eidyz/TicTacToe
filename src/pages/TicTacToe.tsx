@@ -1,9 +1,10 @@
 import * as _ from "lodash"
 import * as React from "react"
 import { useEffect, useState } from "react"
-import {arrayContainsArray, wait} from "../helpers/helpers"
+import { arrayContainsArray, wait } from "../helpers/helpers"
+import { navigate } from "hookrouter"
 
-export default ({useAi = true}: {useAi?: boolean}) => {
+export default ({ useAi = true }: { useAi?: boolean }) => {
   const emptyBoard = new Array(9).fill(null, 0, 9)
 
   const winningConditions = [
@@ -70,13 +71,29 @@ export default ({useAi = true}: {useAi?: boolean}) => {
 
   }, [currentPlayer])
 
+  useEffect(() => {
+    (async () => {
+      if (!_.isNil(gameState)) {
+        await wait(3000)
+        navigate("/")
+      }
+    })()
+  }, [gameState])
+
   return (
     <div className="position-relative">
       {!_.isNil(gameState) && <div className="game-state">{gameState}</div>}
       <div className="board">
         {
           _.map(board, ((item, i) => {
-            return <div className="board__item" key={i} onClick={() => _.isNil(item) && (useAi ? currentPlayer === "X" : true) && _.isNil(gameState) ? makeMove(i) : _.noop()}>
+            return <div
+              className="board__item"
+              key={i}
+              onClick={
+                () => _.isNil(item) && (useAi ? currentPlayer === "X" : true) && _.isNil(gameState)
+                  ? makeMove(i)
+                  : _.noop()
+              }>
               {item}
             </div>
           }))
