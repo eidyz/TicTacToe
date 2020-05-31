@@ -7,7 +7,8 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'index_bundle.js'
+    filename: 'index_bundle.js',
+    publicPath: '/',
   },
   plugins: [new HtmlWebpackPlugin({
     title: "React-Typescript-App",
@@ -29,6 +30,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, './dist/'),
     compress: true,
-    port: 8080
+    port: 8080,
+    historyApiFallback: true,
   }
 };

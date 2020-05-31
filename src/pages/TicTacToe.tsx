@@ -1,12 +1,9 @@
 import * as _ from "lodash"
 import * as React from "react"
 import { useEffect, useState } from "react"
+import {arrayContainsArray, wait} from "../helpers/helpers"
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(() => resolve(), ms))
-
-const arrayContainsArray = (arr: any[], target: any[]) => _.every(target, v => _.includes(arr, v));
-
-export default () => {
+export default ({useAi = true}: {useAi?: boolean}) => {
   const emptyBoard = new Array(9).fill(null, 0, 9)
 
   const winningConditions = [
@@ -67,7 +64,7 @@ export default () => {
       gameWonByX ? "X's won" : gameWonByO ? "O's won" : gameDraw ? "Draw" : null
     )
 
-    if (!gameWonByX && currentPlayer === "O") {
+    if (useAi && !gameWonByX && currentPlayer === "O") {
       makeAiMove()
     }
 
@@ -79,7 +76,7 @@ export default () => {
       <div className="board">
         {
           _.map(board, ((item, i) => {
-            return <div className="board__item" key={i} onClick={() => _.isNil(item) && currentPlayer === "X" && _.isNil(gameState) ? makeMove(i) : _.noop()}>
+            return <div className="board__item" key={i} onClick={() => _.isNil(item) && (useAi ? currentPlayer === "X" : true) && _.isNil(gameState) ? makeMove(i) : _.noop()}>
               {item}
             </div>
           }))
